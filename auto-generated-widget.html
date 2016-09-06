@@ -1322,6 +1322,8 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             }
         },
         preProbe: false,
+        preProbeData: null,
+        preProbesData: null,
         doNextStep: function() {
             
             console.log("doNextStep");
@@ -1334,6 +1336,13 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             
             if (this.currentStep == null) {
                 // we are just starting
+                if (this.preProbe) {
+                	this.probe = this.preProbeData;
+                	this.probes = this.preProbesData;
+                } else {
+                	this.preProbeData = this.probe;
+                	this.preProbesData = this.probes;
+                }
                 this.status("Starting probes");
                 this.currentStep = 0;
             } else {
@@ -1365,6 +1374,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                 
             	// If finished the first probing sequence, start the second one.
             	} else {
+            		this.preProbe = true;
             		this.currentStep = null;
             		this.isPaused = false;
 	                this.send("G0 Z5");
