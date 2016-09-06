@@ -1292,7 +1292,6 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                 }
                 
             }
-            this.probes.push("G0 Z5");
             this.status("Generated " + this.probes.length + " probe locations.");
             console.log("probes:", this.probes);
         },
@@ -1352,6 +1351,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
 
                 // spit out debug
                 console.log("Final JSON data.", JSON.stringify(this.probes));
+                this.send("G0 Z5");
                 return;
             }
             
