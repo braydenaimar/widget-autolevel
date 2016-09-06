@@ -1371,7 +1371,9 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
 	
 	                // spit out debug
 	                console.log("Final JSON data.", JSON.stringify(this.probes));
+	                this.toggleShowMatrix();
 	                this.sendGcodeToWorkspace();
+	                $('#com-chilipeppr-ws-menu .autolevel-button').click();
                 
             	// If finished the first probing sequence, start the second one.
             	} else {
