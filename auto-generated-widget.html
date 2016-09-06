@@ -1344,7 +1344,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                 console.log("next step is greater than probes array length. done.");
                 
             	// If the first probing sequence has already ran, then probing is finished.
-            	if (preProbe) {
+            	if (this.preProbe) {
             		this.preProbe = false;
 	                this.send("G0 Z5");
 	                this.status("Done running probe. Found all Zs for " + this.probes.length + " locations");
