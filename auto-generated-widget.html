@@ -1166,6 +1166,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
         startAutoLevel: function() {
             this.currentStep = null;
             this.isPaused = false;
+            this.preProbe = false;
             $('.com-chilipeppr-widget-autolevel-run').popover('hide');
             $('.com-chilipeppr-widget-autolevel-pause').popover('hide');
             $('.com-chilipeppr-widget-autolevel-run').prop('disabled', true);
@@ -1292,6 +1293,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                 }
                 
             }
+            // this.propes = this.probes.concat(this.probes);
             this.status("Generated " + this.probes.length + " probe locations.");
             console.log("probes:", this.probes);
         },
@@ -1315,6 +1317,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                 $('.com-chilipeppr-widget-autolevel-pause').addClass('active');
             }
         },
+        preProbe: false,
         doNextStep: function() {
             
             console.log("doNextStep");
@@ -1334,24 +1337,35 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             }
             
             if (this.currentStep >= this.probes.length) {
-                // we're done
                 console.log("next step is greater than probes array length. done.");
-                this.status("Done running probe. Found all Zs for " + this.probes.length + " locations");
-                this.stopAutoLevel();
                 
-                // store file automatically
-                var fileStr = JSON.stringify(this.probes);
-                var lastLoc = "x:" + this.probes[this.probes.length-1].x + ",y:" + this.probes[this.probes.length-1].y;
-                var info = {
-                    name: "Probed " + this.probes.length + " locs. Last loc: " + lastLoc,
-                    lastModified: new Date()
-                };
-                this.createRecentFileEntry(fileStr, info);
-                this.status("Created a recent probe data entry for you called \"" + info.name + "\" available in pulldown menu for this widget.");
-
-                // spit out debug
-                console.log("Final JSON data.", JSON.stringify(this.probes));
-                this.send("G0 Z5");
+            	// If the first probing sequence has already ran, then probing is finished.
+            	if (preProbe) {
+            		this.preProbe = false;
+	                this.send("G0 Z5");
+	                this.status("Done running probe. Found all Zs for " + this.probes.length + " locations");
+	                this.stopAutoLevel();
+	                
+	                // store file automatically
+	                var fileStr = JSON.stringify(this.probes);
+	                var lastLoc = "x:" + this.probes[this.probes.length-1].x + ",y:" + this.probes[this.probes.length-1].y;
+	                var info = {
+	                    name: "Probed " + this.probes.length + " locs. Last loc: " + lastLoc,
+	                    lastModified: new Date()
+	                };
+	                this.createRecentFileEntry(fileStr, info);
+	                this.status("Created a recent probe data entry for you called \"" + info.name + "\" available in pulldown menu for this widget.");
+	
+	                // spit out debug
+	                console.log("Final JSON data.", JSON.stringify(this.probes));
+                
+            	// If finished the first probing sequence, start the second one.
+            	} else {
+            		this.currentStep = null;
+            		this.isPaused = false;
+	                this.send("G0 Z5");
+	                this.doNextStep();
+            	}
                 return;
             }
             
