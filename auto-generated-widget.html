@@ -647,7 +647,8 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                                 var newtxt = origtext.replace(/z {0,}(-{0,1}\d+\.{0,1}\d*)/i, "Z" + item.p2.autolevelz);
                                 //item.args.oldtext = item.args.origtext;
                                 //item.args.origtext = newtxt + " (al z mod " + item.p2.origz + ")";
-                                newgcodeline = newtxt + " (al z mod " + item.p2.z + ")";
+                                // newgcodeline = newtxt + " (al z mod " + item.p2.z + ")";
+                                newgcodeline = newtxt;
                                 //console.log("got z:", z, item.args);
                                 
                             }
@@ -674,7 +675,8 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                                 item.p2.autolevelz = item.p2.autolevelz.toFixed(4);
                                 
                                 //item.args.oldtext = item.args.origtext;
-                                newgcodeline = item.args.origtext + "Z" + item.p2.autolevelz + " (al new z)";
+                                // newgcodeline = item.args.origtext + "Z" + item.p2.autolevelz + " (al new z)";
+                                newgcodeline = item.args.origtext + "Z" + item.p2.autolevelz;
                                 //console.log("adding z. new item:", item);
                             }
                             
@@ -697,6 +699,8 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             console.log("lines of gcode analyzed:", ctr, "with gcode text:", ctrtext, "txt with z val:", ctrtextwithz, "ctrtextwithzmatch:", ctrtextwithzmatch, "intersected (should be same as with z val):", ctrIntersected);
             console.log("did user want z added to all G cmds", options.addZToAllGCmds, "ctrGCmd:", ctrGCmd, "ctrGCmdNotValid:", ctrGCmdNotValid, "ctrGCmdRayIntersected:", ctrGCmdRayIntersected);
             console.log("ctr:", ctr, "len of newgcode arr (should be same as ctr):", newgcode.length);
+            
+            newgcode.unshift("Auto Levelled Gcode");
             
             this.autolevelledGcode = newgcode;
             return this.autolevelledGcode;
