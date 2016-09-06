@@ -667,6 +667,11 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                             var ray = new THREE.Raycaster(startPoint, direction); 
                             var rayIntersects = ray.intersectObject(meshGrp, true);
                             if (rayIntersects[0]) {
+                                if (ctrGCmdRayIntersected) {
+	                                newgcodeline = item.args.origtext + "Z" + item.p2.autolevelz;
+                                } else {
+	                                newgcodeline = item.args.origtext + "Z" + (5 + Number(item.p2.autolevelz));
+                                }
                                 
                                 ctrGCmdRayIntersected++;
                                 
@@ -676,7 +681,6 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                                 
                                 //item.args.oldtext = item.args.origtext;
                                 // newgcodeline = item.args.origtext + "Z" + item.p2.autolevelz + " (al new z)";
-                                newgcodeline = item.args.origtext + "Z" + item.p2.autolevelz;
                                 //console.log("adding z. new item:", item);
                             }
                             
