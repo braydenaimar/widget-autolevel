@@ -213,7 +213,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             $('#com-chilipeppr-widget-autolevel-showregion').click(this.addRegionTo3d.bind(this));
             $('#com-chilipeppr-widget-autolevel-hideregion').click(this.removeRegionFrom3d.bind(this));
             $('#com-chilipeppr-widget-autolevel-body .autolevel-elem').blur(this.formUpdate.bind(this));
-            $('.com-chilipeppr-widget-autolevel-autofill').click(this.autoFillDataIdTag.bind(this));
+            $('.com-chilipeppr-widget-autolevel-autofill').click(this.autoFillData.bind(this));
             $('.com-chilipeppr-widget-autolevel-run').click(this.startAutoLevel.bind(this));
             $('.com-chilipeppr-widget-autolevel-stop').click(this.stopAutoLevel.bind(this));
             $('.com-chilipeppr-widget-autolevel-pause').click(this.pause.bind(this));
@@ -1151,7 +1151,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             chilipeppr.publish("/com-chilipeppr-widget-3dviewer/sceneremove", this.matrix);
         },
         onDisplay: function() {
-            this.autoFillData();
+            this.autoFillDataIdTag();
             this.formUpdate();
         },
         onUndisplay: function() {
@@ -1292,8 +1292,9 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                 }
                 
             }
+            this.probes.push("G0 Z5");
             this.status("Generated " + this.probes.length + " probe locations.");
-            //console.log("probes:", this.probes);
+            console.log("probes:", this.probes);
         },
         currentStep: null, // keep track of which step we're on
         isPaused: false,
