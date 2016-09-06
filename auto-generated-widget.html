@@ -213,7 +213,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             $('#com-chilipeppr-widget-autolevel-showregion').click(this.addRegionTo3d.bind(this));
             $('#com-chilipeppr-widget-autolevel-hideregion').click(this.removeRegionFrom3d.bind(this));
             $('#com-chilipeppr-widget-autolevel-body .autolevel-elem').blur(this.formUpdate.bind(this));
-            $('.com-chilipeppr-widget-autolevel-autofill').click(this.autoFillData.bind(this));
+            $('.com-chilipeppr-widget-autolevel-autofill').click(this.autoFillDataIdTag.bind(this));
             $('.com-chilipeppr-widget-autolevel-run').click(this.startAutoLevel.bind(this));
             $('.com-chilipeppr-widget-autolevel-stop').click(this.stopAutoLevel.bind(this));
             $('.com-chilipeppr-widget-autolevel-pause').click(this.pause.bind(this));
@@ -1558,6 +1558,14 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             // send our data
             chilipeppr.publish("/com-chilipeppr-widget-serialport/send", send);
         },
+        autoFillDataIdTag: function() {
+        	$('#com-chilipeppr-widget-autolevel-body .grid-steps').val(13)
+            $('#com-chilipeppr-widget-autolevel-body .start-x').val(-1);
+            $('#com-chilipeppr-widget-autolevel-body .start-y').val(0);
+            $('#com-chilipeppr-widget-autolevel-body .end-x').val(60);
+            $('#com-chilipeppr-widget-autolevel-body .end-y').val(40);
+            this.formUpdate();
+        },
         autoFillData: function() {
             // read the 3d viewer data and auto-fill the extents
             var b = this.getBbox();
@@ -2075,7 +2083,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
             <div class="btn-toolbar " role="toolbar" style="padding-top:4px;">
                 <div class="btn-group" style="xmargin-left:0;">
                     <button type="button" id="" class="btn btn-xs btn-default com-chilipeppr-widget-autolevel-autofill" data-container="body" data-toggle="popover" data-placement="auto" data-content="Auto-fill the Start At and End At positions based on the extent of your Gcode objects in the 3D Viewer"
-                    data-trigger="hover" data-delay="800">Auto-Fill
+                    data-trigger="hover" data-delay="800">Auto Fill
                     </button>
                     <!-- <button type="button" id="com-chilipeppr-widget-autolevel-raycast" class="btn btn-xs btn-default" >Raycast
                 </button> -->
@@ -2139,7 +2147,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                     <div class="btn-toolbar" role="toolbar">
                         <div class="btn-group" style="xmargin-top:10px;">
                             <button type="button" id="" class="btn btn-default com-chilipeppr-widget-autolevel-autofill" data-container="body" data-toggle="popover" data-placement="auto" data-content="Auto-fill the Start At and End At positions based on the extent of your Gcode objects in the 3D Viewer"
-                            data-trigger="hover" data-delay="800">Auto-Fill
+                            data-trigger="hover" data-delay="800">Auto Fill
                             </button>
                             <button type="button" id="" class="btn btn-default com-chilipeppr-widget-autolevel-toggleprobearea">Show Region to Probe
                             </button>
@@ -2230,7 +2238,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                             </div>
                             <div class="input-group">
                                 <div class="input-group-addon">F</div>
-                                <input type="number" class="form-control autolevel-elem al-coord probe-fr" value="25" />
+                                <input type="number" class="form-control autolevel-elem al-coord probe-fr" value="20" />
                             </div>
                         </div>
                     </form>
@@ -2242,7 +2250,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                             </div>
                             <div class="input-group">
                                 <div class="input-group-addon">Z</div>
-                                <input type="number" class="form-control autolevel-elem al-coord maxneg-z" value="-1.5" />
+                                <input type="number" class="form-control autolevel-elem al-coord maxneg-z" value="-0.5" />
                             </div>
                         </div>
                     </form>
