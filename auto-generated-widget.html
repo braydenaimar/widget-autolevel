@@ -673,7 +673,7 @@ cpdefine("inline:com-chilipeppr-widget-autolevel", ["chilipeppr_ready", "ThreeHe
                                 item.p2.autolevelz = item.p2.autolevelz.toFixed(4);
                                 
                                 if (ctrGCmdRayIntersected) {
-	                                newgcodeline = item.args.origtext + "Z" + item.p2.autolevelz;
+	                                newgcodeline = item.args.origtext + "Z" + (0.05 + Number(item.p2.autolevelz));
                                 } else {
 	                                newgcodeline = item.args.origtext + "Z" + (5 + Number(item.p2.autolevelz));
                                 }
